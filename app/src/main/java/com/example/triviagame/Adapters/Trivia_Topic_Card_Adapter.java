@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.triviagame.Objects.Topic;
 import com.example.triviagame.R;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -18,11 +20,11 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
 
 
     public interface ListListener {
-        void clicked(String item, int position);
+        void clicked(Topic item, int position);
     }
 
     private Activity activity;
-    private ArrayList<String> topics = new ArrayList<>();
+    private ArrayList<Topic> topics = new ArrayList<>();
     private ListListener topicListener;
 
     @NonNull
@@ -35,20 +37,13 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final TopicHolder holder = (TopicHolder) viewHolder;
-        String list = getItem(position);
+        Topic topic = getItem(position);
+        holder.topic_name.setText(topic.getName());
 
-      //  holder.topic_name.setText();
-//        if(list.getItems_Counter() == 0)
-//            holder.list_LBL_amount.setText("There are no items yet");
-//        else
-//            holder.list_LBL_amount.setText("" + list.getItems_Counter());
-
-//        Glide
-//                .with(activity)
-//                .load(list.getImage())
-//                .into(holder.topic_image);
-//
-
+        Glide
+                .with(activity)
+                .load(topic.getImage())
+                .into(holder.topic_image);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
         return topics.size();
     }
 
-    public String getItem(int position) {
+    public Topic getItem(int position) {
         return topics.get(position);
     }
 
