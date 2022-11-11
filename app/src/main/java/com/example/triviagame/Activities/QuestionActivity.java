@@ -1,4 +1,4 @@
-package com.example.triviagame;
+package com.example.triviagame.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,7 +7,9 @@ import androidx.cardview.widget.CardView;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class BoardActivity extends AppCompatActivity {
+import com.example.triviagame.R;
+
+public class QuestionActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private CardView card_question, card_answer_A, card_answer_B, card_answer_C, card_answer_D;
@@ -16,13 +18,13 @@ public class BoardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_board);
+        setContentView(R.layout.activity_question);
         initViews();
 
     }
 
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
-        
+
     }
 }
