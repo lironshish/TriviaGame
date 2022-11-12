@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "584131576963",
+    "project_id": "triviagame-87e3b",
+    "storage_bucket": "triviagame-87e3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584131576963:android:b046e130ba3b2a4f72c7b6",
+        "android_client_info": {
+          "package_name": "com.example.triviagame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584131576963-a7241a7l5i2od6sv6knlphjmvqjar3d7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjiLNRNgBaLPSff-qxoIsFHWYuDvUQxtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584131576963-a7241a7l5i2od6sv6knlphjmvqjar3d7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

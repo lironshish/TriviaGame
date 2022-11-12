@@ -19,13 +19,22 @@ import java.util.ArrayList;
 public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    public interface ListListener {
+    public interface TopicListener {
         void clicked(Topic item, int position);
     }
 
     private Activity activity;
     private ArrayList<Topic> topics = new ArrayList<>();
-    private ListListener topicListener;
+    private TopicListener topicListener;
+
+    public Trivia_Topic_Card_Adapter(Activity activity, ArrayList<Topic> topics, TopicListener topicListener){
+        this.activity = activity;
+        this.topics = topics;
+        this.topicListener = topicListener;
+
+    }
+
+
 
     @NonNull
     @Override
@@ -38,7 +47,7 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         final TopicHolder holder = (TopicHolder) viewHolder;
         Topic topic = getItem(position);
-        holder.topic_name.setText(topic.getName());
+        holder.topic_name.setText(topic.getTitle());
 
         Glide
                 .with(activity)
