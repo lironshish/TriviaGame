@@ -23,17 +23,14 @@ public class Results {
     public void setResponse_code(int response_code) {
         this.response_code = response_code;
     }
-/*
 
-    public Question[] getResults() {
+    public ArrayList<Question> getResults() {
         return results;
     }
 
-    public void setResults(Question[] results) {
+    public void setResults(ArrayList<Question> results) {
         this.results = results;
     }
-
-*/
 
     @Override
     public String toString() {

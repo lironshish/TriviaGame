@@ -30,7 +30,7 @@
 
 <!-- Trivia Question-->
     <androidx.cardview.widget.CardView
-
+        android:id="@+id/card_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -46,6 +46,7 @@
 
 
         <TextView
+            android:id="@+id/TXT_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
@@ -64,6 +65,7 @@
 <!--Trivia Answer A -->
     <androidx.cardview.widget.CardView
 
+        android:id="@+id/card_A"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -97,7 +99,7 @@
     <!--Trivia Answer B -->
 
     <androidx.cardview.widget.CardView
-
+        android:id="@+id/card_B"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -131,7 +133,7 @@
     <!--Trivia Answer C -->
 
     <androidx.cardview.widget.CardView
-
+        android:id="@+id/card_C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -166,7 +168,7 @@
     <!--Trivia Answer D -->
 
     <androidx.cardview.widget.CardView
-
+        android:id="@+id/card_D"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
