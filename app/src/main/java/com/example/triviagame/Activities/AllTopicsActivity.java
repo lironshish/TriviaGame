@@ -128,12 +128,4 @@ public class AllTopicsActivity extends AppCompatActivity {
 
     }
 
-
-
-    /*Intent intent = new Intent(MyListActivity.this, ShareListActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("currentListName", currentListName);
-                bundle.putString("currentListSerialNumber", currentListSerialNumber);
-                intent.putExtra("Bundle", bundle);
-                startActivity(intent);*/
 }

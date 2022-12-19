@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    app:cardBackgroundColor="#E66C6C"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/time_out_TXT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Oops Time Out..."
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            />
+
+        <ImageView
+            android:id="@+id/time_out_IMG"
+            android:layout_marginTop="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_alarm_clock"
+            />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/time_out_BTN"
+            style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:backgroundTint="#CD1227"
+            android:elevation="10dp"
+            android:text="Try Again"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:elevation="10dp"
+            />
+
+        </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>

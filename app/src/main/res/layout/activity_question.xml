@@ -8,25 +8,36 @@
     tools:context=".Activities.QuestionActivity">
 
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="40dp"
+        android:background="#C8B993"
+        android:id="@+id/top_part"
+        >
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#C8B993"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp"
-            />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_back">
+        </ImageView>
 
-    </com.google.android.material.appbar.AppBarLayout>
+
+    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_below="@+id/top_part"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:indeterminate="false"
+        android:maxHeight="12dp"
+        android:minHeight="12dp"
+        android:progress="10"
+        android:max="20"
+        android:background="#B1A6A6"
+        android:progressTint="@color/black"
+        />
 
 <!-- Trivia Question-->
     <androidx.cardview.widget.CardView
@@ -199,6 +210,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/next_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_D"
+        android:layout_centerInParent="true"
+        android:backgroundTint="#BDD1CF"
+        android:fontFamily="@font/main_font"
+        android:text="Next"
+        android:visibility="visible"/>
 
 
 </RelativeLayout>
