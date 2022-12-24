@@ -16,6 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.UUID;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_topics);
+        setContentView(R.layout.activity_register);
 
 
         initViews();
@@ -49,9 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("pttt", "email: " + email);
                 String password = inputPassword.getText().toString();
                 Log.d("pttt", "password: " + password);
-                String userID = dataManager.getFirebaseAuth().getCurrentUser().getUid();
-                Log.d("pttt", "userID: " + userID);
-                tempUser = new MyUser(userName, email, password, userID);
+//                String userID = dataManager.getRealTimeDB().get.getCurrentUser().getUid();
+//                Log.d("pttt", "userID: " + userID);
+                tempUser = new MyUser(userName, email, password);
                 storeUserInDB(tempUser);
 
             }
@@ -59,8 +61,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void storeUserInDB(MyUser tempUser) {
-
-        DatabaseReference myRef = realtimeDB.getReference("Users").child(tempUser.getUID());
+//        String UID = dataManager.getFirebaseAuth().getCurrentUser().getUid();
+//        tempUser.setUID(UID);
+        UUID uuid = UUID.randomUUID();
+        tempUser.setUID(uuid.toString());
+        DatabaseReference myRef = realtimeDB.getReference("Users").child( uuid.toString());
         myRef.child("userName").setValue(tempUser.getName());
         myRef.child("email").setValue(tempUser.getEmail());
         myRef.child("password").setValue(tempUser.getPassword());

@@ -7,11 +7,10 @@ public class MyUser {
     private String password;
     private String UID;
 
-    public MyUser(String name, String email, String password,String UID) {
+    public MyUser(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.UID = UID;
     }
 
     public MyUser(){
