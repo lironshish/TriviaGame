@@ -39,6 +39,20 @@
         android:progressTint="@color/black"
         />
 
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_LOTTIE_animation"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_below="@id/progress_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/loading_animation"
+        app:lottie_speed="0.5" />
+
+
 <!-- Trivia Question-->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_question"
@@ -49,6 +63,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/white"
+        android:foregroundGravity="center"
         app:cardCornerRadius="20dp"
         app:cardElevation="10dp"
         app:cardMaxElevation="12dp"
@@ -64,6 +79,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:text="Trivia Question"
+            android:gravity="center"
             android:fontFamily="@font/main_font"
             android:textColor="@color/black"
             android:textSize="20sp"

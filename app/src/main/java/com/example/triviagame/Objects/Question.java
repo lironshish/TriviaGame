@@ -1,6 +1,7 @@
 package com.example.triviagame.Objects;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Question {
     private String category;
@@ -66,6 +67,8 @@ public class Question {
 
 
     public ArrayList<String> getIncorrect_answers() {
+//        incorrect_answers.add(correct_answer);
+//        Collections.shuffle(incorrect_answers);
         return incorrect_answers;
     }
 

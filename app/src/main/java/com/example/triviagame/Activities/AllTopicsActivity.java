@@ -43,33 +43,13 @@ public class AllTopicsActivity extends AppCompatActivity {
     private RecyclerView topic_recycler_view;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_topics);
         findViews();
         updateUI();
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                String webPage = "https://opentdb.com/api.php?amount=1&category=18&difficulty=easy&type=multiple";
-                Log.d("ptt", "category 11");
-
-                try (InputStream is = new URL(webPage).openStream();
-                     Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-
-                    Gson gson = new Gson();
-                    Results results = gson.fromJson(reader, Results.class);
-                    Log.d("ptt", "my " + results.toString());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
 
     }
 
@@ -84,7 +64,8 @@ public class AllTopicsActivity extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.child("Topics").getChildren()) {
                     String image = child.child("Image").getValue().toString();
                     String title = child.child("Title").getValue().toString();
-                    Topic topic = new Topic(title, image);
+                    String webPage = child.child("WebPage").getValue().toString();
+                    Topic topic = new Topic(title, image, webPage);
                     temp.add(topic);
 
                 }
@@ -99,10 +80,8 @@ public class AllTopicsActivity extends AppCompatActivity {
 
             }
         });
-
-        initAdapter();
-
     }
+
 
     private void initAdapter() {
         adapter = new Trivia_Topic_Card_Adapter(this, myTopics, new Trivia_Topic_Card_Adapter.TopicListener() {
@@ -112,6 +91,7 @@ public class AllTopicsActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("TopicName", item.getTitle());
+                bundle.putString("WebPage", item.getWebPage());
                 intent.putExtra("Bundle", bundle);
                 startActivity(intent);
             }
