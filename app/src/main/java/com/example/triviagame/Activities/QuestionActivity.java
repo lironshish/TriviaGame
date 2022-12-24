@@ -295,11 +295,11 @@ public class QuestionActivity extends AppCompatActivity {
         card_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_question.setClickable(true);
-                disableButtons();
-                Log.d("pttt","index " +index);
 
                 if(index < results.getResults().size() - 1) {
+                    next_question.setClickable(true);
+                    disableButtons();
+                    Log.d("pttt","index " +index);
                     if (results.getResults().get(index).getCorrect_answer().equals(answer_A.getText().toString())) {
 
 

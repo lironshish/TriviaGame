@@ -51,8 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("pttt", "email: " + email);
                 String password = inputPassword.getText().toString();
                 Log.d("pttt", "password: " + password);
-//                String userID = dataManager.getRealTimeDB().get.getCurrentUser().getUid();
-//                Log.d("pttt", "userID: " + userID);
                 tempUser = new MyUser(userName, email, password);
                 storeUserInDB(tempUser);
 
@@ -61,8 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void storeUserInDB(MyUser tempUser) {
-//        String UID = dataManager.getFirebaseAuth().getCurrentUser().getUid();
-//        tempUser.setUID(UID);
         UUID uuid = UUID.randomUUID();
         tempUser.setUID(uuid.toString());
         DatabaseReference myRef = realtimeDB.getReference("Users").child( uuid.toString());
