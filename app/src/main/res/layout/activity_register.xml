@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_login_background"
+    android:background="@drawable/ic_background"
     tools:context=".Activities.RegisterActivity">
 
 
@@ -14,13 +14,13 @@
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/main_font"
+        android:fontFamily="@font/titles_font"
         android:gravity="center"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:text="Register"
         android:textColor="@color/white"
-        android:textSize="36sp"
+        android:textSize="90sp"
         android:textStyle="bold" />
     <LinearLayout
         android:id="@+id/LL_top"
@@ -49,7 +49,7 @@
             android:paddingTop="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
         <EditText
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/blue"
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:text="Register"
             />

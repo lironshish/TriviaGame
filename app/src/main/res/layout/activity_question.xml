@@ -4,41 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEBCE"
+    android:background="@drawable/ic_background"
     tools:context=".Activities.QuestionActivity">
 
 
     <LinearLayout
+        android:id="@+id/top_part"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#C8B993"
-        android:id="@+id/top_part"
-        >
+        android:background="@color/blue">
 
         <ImageView
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/ic_back">
-        </ImageView>
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_back"/>
 
 
     </LinearLayout>
+
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_below="@+id/top_part"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="5dp"
+        android:layout_below="@+id/top_part"
+        android:background="@color/white"
         android:indeterminate="false"
+        android:max="20"
         android:maxHeight="12dp"
         android:minHeight="12dp"
         android:progress="10"
-        android:max="20"
-        android:background="#B1A6A6"
-        android:progressTint="@color/black"
-        />
-
+        android:progressTint="@color/black" />
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -49,22 +47,20 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         app:lottie_autoPlay="true"
-        app:lottie_rawRes="@raw/loading_animation"
+        app:lottie_rawRes="@raw/blue_loading_animation"
         app:lottie_speed="0.5" />
 
 
-<!-- Trivia Question-->
+    <!-- Trivia Question-->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_question"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/white"
+        android:layout_below="@+id/progress_bar"
+        android:layout_centerInParent="true"
         android:foregroundGravity="center"
-        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:cardMaxElevation="12dp"
         app:cardPreventCornerOverlap="true"
@@ -78,9 +74,9 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Trivia Question"
-            android:gravity="center"
             android:fontFamily="@font/main_font"
+            android:gravity="center"
+            android:text="Trivia Question"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -89,20 +85,16 @@
     </androidx.cardview.widget.CardView>
 
 
-<!--Trivia Answer A -->
+    <!--Trivia Answer A -->
     <androidx.cardview.widget.CardView
 
         android:id="@+id/card_A"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#D2FAFF"
-        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/card_question"
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -114,8 +106,8 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Trivia Answer A"
             android:fontFamily="@font/main_font"
+            android:text="Trivia Answer A"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -129,14 +121,11 @@
         android:id="@+id/card_B"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="280dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#D2FAFF"
-        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/card_A"
+
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -148,8 +137,8 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Trivia Answer B"
             android:fontFamily="@font/main_font"
+            android:text="Trivia Answer B"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -163,14 +152,11 @@
         android:id="@+id/card_C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="360dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#D2FAFF"
-        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/card_B"
+
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -182,8 +168,8 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Trivia Answer C"
             android:fontFamily="@font/main_font"
+            android:text="Trivia Answer C"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -198,14 +184,11 @@
         android:id="@+id/card_D"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="440dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="#D2FAFF"
-        app:cardCornerRadius="20dp"
+        android:layout_below="@+id/card_C"
+
+        app:cardBackgroundColor="@color/white"
         app:cardElevation="10dp"
-        app:cardMaxElevation="12dp"
+        app:cardMaxElevation="5dp"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -217,8 +200,8 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="Trivia Answer D"
             android:fontFamily="@font/main_font"
+            android:text="Trivia Answer D"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -228,14 +211,15 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/next_question"
+        style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/card_D"
         android:layout_centerInParent="true"
-        android:backgroundTint="#BDD1CF"
+        android:backgroundTint="@color/blue"
         android:fontFamily="@font/main_font"
         android:text="Next"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
 
 </RelativeLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_login_background"
+    android:background="@drawable/ic_background"
     tools:context=".Activities.LoginActivity">
 
 
@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:fontFamily="@font/main_font"
+        android:fontFamily="@font/titles_font"
         android:gravity="center"
         android:text="Login"
         android:textColor="@color/white"
-        android:textSize="36sp"
+        android:textSize="90sp"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/blue"
             android:text="Login" />
 
         <LinearLayout
@@ -95,14 +95,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dont have an Account?"
+                android:text="Dont have an Account? "
                 android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/textViewSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SignUp"
+                android:text="Sign Up"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -128,7 +128,7 @@
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/blue"
             android:drawablePadding="10dp"
             android:paddingLeft="20dp"
             android:text="Privacy Policy"
@@ -142,7 +142,7 @@
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/blue"
             android:drawablePadding="10dp"
             android:paddingLeft="20dp"
             android:text="Terms Of Use"
@@ -156,7 +156,7 @@
             style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="@color/brown"
+            android:backgroundTint="@color/blue"
             android:drawablePadding="10dp"
             android:paddingLeft="20dp"
             android:text="About"
