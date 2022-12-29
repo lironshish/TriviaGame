@@ -145,7 +145,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void setData(Results r) {
         ArrayList<String> answers = new ArrayList<>();
-        if (index < r.getResults().size() - 1) {
+        if (index <= r.getResults().size() - 1) {
             for (int i = 0; i < r.getResults().get(index).getIncorrect_answers().size(); i++)
                 answers.add(r.getResults().get(index).getIncorrect_answers().get(i));
 
@@ -167,7 +167,6 @@ public class QuestionActivity extends AppCompatActivity {
                 countDownTimer.start();
             }
             firstQuestion = false;
-
         }
     }
 
@@ -238,13 +237,13 @@ public class QuestionActivity extends AppCompatActivity {
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (index < 9) {
-                    correctCount++;
-                    index++;
+                index++;
+                correctCount++;
+                if (index <= 9) {
                     resetColor();
                     setData(results);
-                    enableButtons();
-                } else if (index == 9) {
+                    enableCards();
+                } else if(index == 10) {
                     GameWon();
                 }
 
@@ -260,14 +259,13 @@ public class QuestionActivity extends AppCompatActivity {
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (index < 9) {
-                    wrongCount++;
-                    index++;
+                index++;
+                wrongCount++;
+                if (index <= 9) {
                     resetColor();
                     setData(results);
-                    enableButtons();
-                } else if (index == 9){
+                    enableCards();
+                } else if (index == 10){
                     GameWon();
                 }
             }
@@ -284,14 +282,14 @@ public class QuestionActivity extends AppCompatActivity {
         finish();
     }
 
-    public void enableButtons() {
+    public void enableCards() {
         card_A.setClickable(true);
         card_B.setClickable(true);
         card_C.setClickable(true);
         card_D.setClickable(true);
     }
 
-    public void disableButtons() {
+    public void disableCards() {
         card_A.setClickable(false);
         card_B.setClickable(false);
         card_C.setClickable(false);
@@ -307,9 +305,9 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     private void checkIfCorrectAnswer(CardView cardView, TextView textView) {
-        countDownTimer.cancel();
-        if (index <= results.getResults().size() - 1) {
-            next_question.setEnabled(true);
+        countDownTimer.cancel(); //stop the timer
+        if (index <= (results.getResults().size() - 1)) {
+            next_question.setEnabled(true); //we can click on 'next' bottom
             if (results.getResults().get(index).getCorrect_answer().equals(textView.getText().toString())) {
                 sound.setMpAndPlay((ContextWrapper) getApplicationContext(), R.raw.correct_answer_sound);
                 correctAnswer(cardView);
@@ -325,7 +323,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 next_question.setEnabled(true);
-                disableButtons();
+                disableCards();
                 checkIfCorrectAnswer(card_A, answer_A);
             }
         });
@@ -333,7 +331,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 next_question.setEnabled(true);
-                disableButtons();
+                disableCards();
                 checkIfCorrectAnswer(card_B, answer_B);
             }
         });
@@ -341,7 +339,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 next_question.setEnabled(true);
-                disableButtons();
+                disableCards();
                 checkIfCorrectAnswer(card_C, answer_C);
             }
         });
@@ -350,7 +348,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 next_question.setEnabled(true);
-                disableButtons();
+                disableCards();
                 checkIfCorrectAnswer(card_D, answer_D);
             }
         });
