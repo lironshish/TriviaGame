@@ -111,7 +111,11 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.child("email").getValue().toString().equals(email)) {
                         if (dataSnapshot.child("password").getValue().equals(password)) {
-                            startActivity(new Intent(LoginActivity.this, AllTopicsActivity.class));
+                            Intent intent = new Intent(LoginActivity.this, AllTopicsActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userName", dataSnapshot.child("userName").getValue().toString());
+                            intent.putExtra("Bundle", bundle);
+                            startActivity(intent);
                             finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "The password is incorrect, please try again", Toast.LENGTH_SHORT).show();

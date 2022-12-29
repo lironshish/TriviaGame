@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.d("pttt", "email: " + email);
                 String password = inputPassword.getText().toString();
                 Log.d("pttt", "password: " + password);
-                if(emailValidator(email)){
+                if (emailValidator(email)) {
                     tempUser = new MyUser(userName, email, password);
                     storeUserInDB(tempUser);
                 }
@@ -77,11 +77,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void storeUserInDB(MyUser tempUser) {
         UUID uuid = UUID.randomUUID();
         tempUser.setUID(uuid.toString());
-        DatabaseReference myRef = realtimeDB.getReference("Users").child( uuid.toString());
+        DatabaseReference myRef = realtimeDB.getReference("Users").child(uuid.toString());
         myRef.child("userName").setValue(tempUser.getName());
         myRef.child("email").setValue(tempUser.getEmail());
         myRef.child("password").setValue(tempUser.getPassword());
-        startActivity(new Intent(RegisterActivity.this, AllTopicsActivity.class));
+        Intent intent = new Intent(RegisterActivity.this, AllTopicsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userName", tempUser.getName());
+        intent.putExtra("Bundle", bundle);
         finish();
     }
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.animation.Animator;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,9 +17,9 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.triviagame.Dialogs.TimeOutDialog;
 import com.example.triviagame.Objects.Results;
+import com.example.triviagame.Objects.Sound;
 import com.example.triviagame.R;
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.storage.internal.Sleeper;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -49,12 +50,14 @@ public class QuestionActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private int timerValue = 20;
     private ProgressBar progress_bar;
-
+    private boolean firstQuestion = true;
 
     int index = 0;
     int correctCount = 0;
     int wrongCount = 0;
     Results results = new Results();
+
+    private Sound sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,7 @@ public class QuestionActivity extends AppCompatActivity {
             this.bundle = new Bundle();
         }
 
-
+        sound = new Sound();
         initViews();
 
         makeServerCall(new UpdateUI() {
@@ -96,54 +99,59 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void loading() {
 
-            loading_LOTTIE_animation.addAnimatorListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-                    loading_LOTTIE_animation.setVisibility(View.VISIBLE);
-                    card_question.setVisibility(View.INVISIBLE);
-                    card_A.setVisibility(View.INVISIBLE);
-                    card_B.setVisibility(View.INVISIBLE);
-                    card_C.setVisibility(View.INVISIBLE);
-                    card_D.setVisibility(View.INVISIBLE);
-                    TXT_question.setVisibility(View.INVISIBLE);
-                    answer_A.setVisibility(View.INVISIBLE);
-                    answer_B.setVisibility(View.INVISIBLE);
-                    answer_C.setVisibility(View.INVISIBLE);
-                    answer_D.setVisibility(View.INVISIBLE);
-                    next_question.setVisibility(View.INVISIBLE);
-                }
+        loading_LOTTIE_animation.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+                loading_LOTTIE_animation.setVisibility(View.VISIBLE);
+                card_question.setVisibility(View.INVISIBLE);
+                card_A.setVisibility(View.INVISIBLE);
+                card_B.setVisibility(View.INVISIBLE);
+                card_C.setVisibility(View.INVISIBLE);
+                card_D.setVisibility(View.INVISIBLE);
+                TXT_question.setVisibility(View.INVISIBLE);
+                answer_A.setVisibility(View.INVISIBLE);
+                answer_B.setVisibility(View.INVISIBLE);
+                answer_C.setVisibility(View.INVISIBLE);
+                answer_D.setVisibility(View.INVISIBLE);
+                next_question.setVisibility(View.INVISIBLE);
+                progress_bar.setVisibility(View.INVISIBLE);
+            }
 
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    loading_LOTTIE_animation.setVisibility(View.INVISIBLE);
-                    card_question.setVisibility(View.VISIBLE);
-                    card_A.setVisibility(View.VISIBLE);
-                    card_B.setVisibility(View.VISIBLE);
-                    card_C.setVisibility(View.VISIBLE);
-                    card_D.setVisibility(View.VISIBLE);
-                    TXT_question.setVisibility(View.VISIBLE);
-                    answer_A.setVisibility(View.VISIBLE);
-                    answer_B.setVisibility(View.VISIBLE);
-                    answer_C.setVisibility(View.VISIBLE);
-                    answer_D.setVisibility(View.VISIBLE);
-                    next_question.setVisibility(View.VISIBLE);
-                }
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                loading_LOTTIE_animation.setVisibility(View.INVISIBLE);
+                card_question.setVisibility(View.VISIBLE);
+                card_A.setVisibility(View.VISIBLE);
+                card_B.setVisibility(View.VISIBLE);
+                card_C.setVisibility(View.VISIBLE);
+                card_D.setVisibility(View.VISIBLE);
+                TXT_question.setVisibility(View.VISIBLE);
+                answer_A.setVisibility(View.VISIBLE);
+                answer_B.setVisibility(View.VISIBLE);
+                answer_C.setVisibility(View.VISIBLE);
+                answer_D.setVisibility(View.VISIBLE);
+                next_question.setVisibility(View.VISIBLE);
+                progress_bar.setVisibility(View.VISIBLE);
 
-                @Override
-                public void onAnimationCancel(Animator animator) {
+                initTimer();
 
-                }
+            }
 
-                @Override
-                public void onAnimationRepeat(Animator animator) {
+            @Override
+            public void onAnimationCancel(Animator animator) {
 
-                }
-            });
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
     }
 
     private void setData(Results r) {
         ArrayList<String> answers = new ArrayList<>();
-        if(index < r.getResults().size() - 1) {
+        if (index < r.getResults().size() - 1) {
             for (int i = 0; i < r.getResults().get(index).getIncorrect_answers().size(); i++)
                 answers.add(r.getResults().get(index).getIncorrect_answers().get(i));
 
@@ -154,11 +162,13 @@ public class QuestionActivity extends AppCompatActivity {
             answer_B.setText(Html.fromHtml(answers.get(1)));
             answer_C.setText(Html.fromHtml(answers.get(2)));
             answer_D.setText(Html.fromHtml(answers.get(3)));
-            initTimer();
+            if (!firstQuestion) {
+                timerValue = 20;
+                countDownTimer.cancel();
+                countDownTimer.start();
+            }
+            firstQuestion = false;
 
-            timerValue = 20;
-            countDownTimer.cancel();
-            countDownTimer.start();
         }
     }
 
@@ -232,6 +242,7 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 correctCount++;
+                Log.d("pttt", "correctCount " + correctCount);
                 index++;
                 resetColor();
                 setData(results);
@@ -243,17 +254,19 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     public void wrongAnswer(CardView card) {
+        sound.setMpAndPlay((ContextWrapper) getApplicationContext(), R.raw.incorrect_answer_sound);
         card.setCardBackgroundColor(getResources().getColor(R.color.red));
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 wrongCount++;
+                Log.d("pttt", "wrongCount " + wrongCount);
                 if (index < results.getResults().size()) {
                     index++;
                     resetColor();
                     setData(results);
                     enableButtons();
-                    } else {
+                } else {
                     GameWon();
                 }
             }
@@ -284,35 +297,42 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     public void resetColor() {
-        card_A.setCardBackgroundColor(getResources().getColor(R.color.defaultCard));
-        card_B.setCardBackgroundColor(getResources().getColor(R.color.defaultCard));
-        card_C.setCardBackgroundColor(getResources().getColor(R.color.defaultCard));
-        card_D.setCardBackgroundColor(getResources().getColor(R.color.defaultCard));
+        card_A.setCardBackgroundColor(getResources().getColor(R.color.white));
+        card_B.setCardBackgroundColor(getResources().getColor(R.color.white));
+        card_C.setCardBackgroundColor(getResources().getColor(R.color.white));
+        card_D.setCardBackgroundColor(getResources().getColor(R.color.white));
     }
+
+
+    private void checkIfCorrectAnswer(CardView cardView, TextView textView) {
+        countDownTimer.cancel();
+        if (index < results.getResults().size() - 1) {
+            next_question.setClickable(true);
+            disableButtons();
+            if (results.getResults().get(index).getCorrect_answer().equals(textView.getText().toString())) {
+                sound.setMpAndPlay((ContextWrapper) getApplicationContext(), R.raw.correct_answer_sound);
+                cardView.setCardBackgroundColor(getResources().getColor(R.color.green));
+                if (index < results.getResults().size() - 1) {
+                    correctAnswer(cardView);
+                } else {
+                    GameWon();
+                }
+            } else {
+                wrongAnswer(cardView);
+            }
+        }
+    }
+
 
     public void cardAClick() {
 
         card_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                next_question.setClickable(true);
+                disableButtons();
+                checkIfCorrectAnswer(card_A, answer_A);
 
-                if(index < results.getResults().size() - 1) {
-                    next_question.setClickable(true);
-                    disableButtons();
-                    Log.d("pttt","index " +index);
-                    if (results.getResults().get(index).getCorrect_answer().equals(answer_A.getText().toString())) {
-
-
-                        card_A.setCardBackgroundColor(getResources().getColor(R.color.green));
-                        if (index < results.getResults().size() - 1) {
-                            correctAnswer(card_A);
-                        } else {
-                            GameWon();
-                        }
-                    } else {
-                        wrongAnswer(card_A);
-                    }
-                }
 
             }
         });
@@ -325,18 +345,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 next_question.setClickable(true);
                 disableButtons();
-
-                if (results.getResults().get(index).getCorrect_answer().equals(answer_B.getText().toString())) {
-                    card_B.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-                    if (index < results.getResults().size() - 1) {
-                      correctAnswer(card_B);
-                    } else {
-                        GameWon();
-                    }
-                } else {
-                    wrongAnswer(card_B);
-                }
+                checkIfCorrectAnswer(card_B, answer_B);
             }
         });
     }
@@ -348,18 +357,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 next_question.setClickable(true);
                 disableButtons();
-
-                if (results.getResults().get(index).getCorrect_answer().equals(answer_C.getText().toString())) {
-                    card_C.setCardBackgroundColor(getResources().getColor(R.color.green));
-
-                    if (index < results.getResults().size() - 1) {
-                       correctAnswer(card_C);
-                    } else {
-                        GameWon();
-                    }
-                } else {
-                    wrongAnswer(card_C);
-                }
+                checkIfCorrectAnswer(card_C, answer_C);
             }
         });
 
@@ -372,17 +370,7 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 next_question.setClickable(true);
                 disableButtons();
-
-                if (results.getResults().get(index).getCorrect_answer().equals(answer_D.getText().toString())) {
-                    card_D.setCardBackgroundColor(getResources().getColor(R.color.green));
-                    if (index < results.getResults().size() - 1) {
-                       correctAnswer(card_D);
-                    } else {
-                        GameWon();
-                    }
-                } else {
-                    wrongAnswer(card_D);
-                }
+                checkIfCorrectAnswer(card_D, answer_D);
             }
         });
 

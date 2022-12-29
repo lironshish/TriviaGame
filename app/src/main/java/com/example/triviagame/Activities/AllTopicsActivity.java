@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.triviagame.Adapters.Trivia_Topic_Card_Adapter;
 import com.example.triviagame.Objects.Results;
@@ -41,14 +42,28 @@ public class AllTopicsActivity extends AppCompatActivity {
     private ArrayList<Topic> myTopics = new ArrayList();
     private Trivia_Topic_Card_Adapter adapter;
     private RecyclerView topic_recycler_view;
+    private TextView title;
 
+    //Bundle
+    private Bundle bundle;
+    private String userName;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_topics);
+
+        if (getIntent().getBundleExtra("Bundle") != null) {
+            this.bundle = getIntent().getBundleExtra("Bundle");
+            userName = bundle.getString("userName");
+        } else {
+            this.bundle = new Bundle();
+        }
+
         findViews();
+        title.setText("Hi " + userName+ "," +"\n"+"Please choose questions topic");
+
         updateUI();
 
     }
@@ -105,7 +120,7 @@ public class AllTopicsActivity extends AppCompatActivity {
 
     private void findViews() {
         topic_recycler_view = findViewById(R.id.topic_recycler_view);
-
+        title = findViewById(R.id.title);
     }
 
 }
