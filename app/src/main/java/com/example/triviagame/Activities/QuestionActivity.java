@@ -34,29 +34,30 @@ import java.util.Collections;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    //private Toolbar toolbar;
+    //UI
     private CardView card_question, card_A, card_B, card_C, card_D;
     private TextView TXT_question, answer_A, answer_B, answer_C, answer_D;
     private MaterialButton next_question;
     private LottieAnimationView loading_LOTTIE_animation;
+    private ProgressBar progress_bar;
 
 
     //Bundle
     private Bundle bundle;
-
-    private String currentTopic;
     private String webPage;
 
+    //Timer
     private CountDownTimer countDownTimer;
     private int timerValue = 20;
-    private ProgressBar progress_bar;
     private boolean firstQuestion = true;
 
+    //Questions
     int index = 0;
     int correctCount = 0;
     int wrongCount = 0;
-    Results results = new Results();
+    private Results results = new Results();
 
+    //Sound
     private Sound sound;
 
     @Override
@@ -66,7 +67,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (getIntent().getBundleExtra("Bundle") != null) {
             this.bundle = getIntent().getBundleExtra("Bundle");
-            currentTopic = bundle.getString("TopicName");
             webPage = bundle.getString("WebPage");
         } else {
             this.bundle = new Bundle();
@@ -85,15 +85,9 @@ public class QuestionActivity extends AppCompatActivity {
                         setData(r);
                     }
                 });
-
             }
         });
-
-        next_question.setClickable(false);
-        cardAClick();
-        cardBClick();
-        cardCClick();
-        cardDClick();
+        initCards();
     }
 
 
@@ -162,6 +156,11 @@ public class QuestionActivity extends AppCompatActivity {
             answer_B.setText(Html.fromHtml(answers.get(1)));
             answer_C.setText(Html.fromHtml(answers.get(2)));
             answer_D.setText(Html.fromHtml(answers.get(3)));
+            next_question.setEnabled(false);
+
+            if (index == r.getResults().size() - 1)
+                next_question.setText("Finish");
+
             if (!firstQuestion) {
                 timerValue = 20;
                 countDownTimer.cancel();
@@ -212,10 +211,8 @@ public class QuestionActivity extends AppCompatActivity {
         answer_B = findViewById(R.id.answer_B);
         answer_C = findViewById(R.id.answer_C);
         answer_D = findViewById(R.id.answer_D);
-
         progress_bar = findViewById(R.id.progress_bar);
         next_question = findViewById(R.id.next_question);
-
         loading_LOTTIE_animation = findViewById(R.id.loading_LOTTIE_animation);
     }
 
@@ -241,12 +238,16 @@ public class QuestionActivity extends AppCompatActivity {
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                correctCount++;
-                Log.d("pttt", "correctCount " + correctCount);
-                index++;
-                resetColor();
-                setData(results);
-                enableButtons();
+                if (index < 9) {
+                    correctCount++;
+                    index++;
+                    resetColor();
+                    setData(results);
+                    enableButtons();
+                } else if (index == 9) {
+                    GameWon();
+                }
+
 
             }
         });
@@ -259,14 +260,14 @@ public class QuestionActivity extends AppCompatActivity {
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                wrongCount++;
-                Log.d("pttt", "wrongCount " + wrongCount);
-                if (index < results.getResults().size()) {
+
+                if (index < 9) {
+                    wrongCount++;
                     index++;
                     resetColor();
                     setData(results);
                     enableButtons();
-                } else {
+                } else if (index == 9){
                     GameWon();
                 }
             }
@@ -280,6 +281,7 @@ public class QuestionActivity extends AppCompatActivity {
         intent.putExtra("correct", correctCount);
         intent.putExtra("wrong", wrongCount);
         startActivity(intent);
+        finish();
     }
 
     public void enableButtons() {
@@ -306,17 +308,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void checkIfCorrectAnswer(CardView cardView, TextView textView) {
         countDownTimer.cancel();
-        if (index < results.getResults().size() - 1) {
-            next_question.setClickable(true);
-            disableButtons();
+        if (index <= results.getResults().size() - 1) {
+            next_question.setEnabled(true);
             if (results.getResults().get(index).getCorrect_answer().equals(textView.getText().toString())) {
                 sound.setMpAndPlay((ContextWrapper) getApplicationContext(), R.raw.correct_answer_sound);
-                cardView.setCardBackgroundColor(getResources().getColor(R.color.green));
-                if (index < results.getResults().size() - 1) {
-                    correctAnswer(cardView);
-                } else {
-                    GameWon();
-                }
+                correctAnswer(cardView);
             } else {
                 wrongAnswer(cardView);
             }
@@ -324,51 +320,36 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
 
-    public void cardAClick() {
-
+    private void initCards() {
         card_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_question.setClickable(true);
+                next_question.setEnabled(true);
                 disableButtons();
                 checkIfCorrectAnswer(card_A, answer_A);
-
-
             }
         });
-    }
-
-
-    public void cardBClick() {
         card_B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_question.setClickable(true);
+                next_question.setEnabled(true);
                 disableButtons();
                 checkIfCorrectAnswer(card_B, answer_B);
             }
         });
-    }
-
-
-    public void cardCClick() {
         card_C.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_question.setClickable(true);
+                next_question.setEnabled(true);
                 disableButtons();
                 checkIfCorrectAnswer(card_C, answer_C);
             }
         });
 
-
-    }
-
-    public void cardDClick() {
         card_D.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_question.setClickable(true);
+                next_question.setEnabled(true);
                 disableButtons();
                 checkIfCorrectAnswer(card_D, answer_D);
             }

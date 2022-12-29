@@ -6,13 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.triviagame.Adapters.Trivia_Topic_Card_Adapter;
-import com.example.triviagame.Objects.Results;
 import com.example.triviagame.Objects.Topic;
 import com.example.triviagame.R;
 import com.google.firebase.database.DataSnapshot;
@@ -20,15 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class AllTopicsActivity extends AppCompatActivity {
@@ -105,7 +94,6 @@ public class AllTopicsActivity extends AppCompatActivity {
             public void clicked(Topic item, int position) {
                 Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("TopicName", item.getTitle());
                 bundle.putString("WebPage", item.getWebPage());
                 intent.putExtra("Bundle", bundle);
                 startActivity(intent);

@@ -22,20 +22,18 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 public class LoginActivity extends AppCompatActivity {
-
+    //UI
     private TextView login, textViewSignUp;
     private EditText inputEmail, inputPassword;
     private MaterialButton login_BTN, privacy_policy_BTN, terms_of_use_BTN, about_BTN;
-
+    //DB
     private final MyDataManager dataManager = MyDataManager.getInstance();
-    private final FirebaseDatabase realtimeDB = dataManager.getRealTimeDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

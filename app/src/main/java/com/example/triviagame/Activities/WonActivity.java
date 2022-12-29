@@ -12,11 +12,12 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 public class WonActivity extends AppCompatActivity {
 
-
+    //UI
     private CircularProgressBar circularProgressBar;
     private TextView result_text;
     private LottieAnimationView win_LOTTIE_animation;
 
+    //Counters
     int correct, wrong;
 
     @SuppressLint("SetTextI18n")

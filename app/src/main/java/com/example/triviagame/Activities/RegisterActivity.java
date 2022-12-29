@@ -2,7 +2,6 @@ package com.example.triviagame.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -23,12 +22,13 @@ import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
-
+    //UI
     private TextView register;
     private EditText inputUsername, inputEmail, inputPassword;
     private MaterialButton register_BTN;
+    //Local user
     private MyUser tempUser;
-
+    //DB
     private final MyDataManager dataManager = MyDataManager.getInstance();
     private final FirebaseDatabase realtimeDB = dataManager.getRealTimeDB();
 
@@ -37,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
 
         initViews();
         initButtons();
@@ -48,17 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String userName = inputUsername.getText().toString();
-                Log.d("pttt", "userName: " + userName);
-
                 String email = inputEmail.getText().toString();
-                Log.d("pttt", "email: " + email);
                 String password = inputPassword.getText().toString();
-                Log.d("pttt", "password: " + password);
                 if (emailValidator(email)) {
                     tempUser = new MyUser(userName, email, password);
                     storeUserInDB(tempUser);
                 }
-
             }
         });
     }
