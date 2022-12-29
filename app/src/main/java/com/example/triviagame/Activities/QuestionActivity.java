@@ -87,7 +87,6 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         next_question.setClickable(false);
-        initTimer();
         cardAClick();
         cardBClick();
         cardCClick();
@@ -155,6 +154,7 @@ public class QuestionActivity extends AppCompatActivity {
             answer_B.setText(Html.fromHtml(answers.get(1)));
             answer_C.setText(Html.fromHtml(answers.get(2)));
             answer_D.setText(Html.fromHtml(answers.get(3)));
+            initTimer();
 
             timerValue = 20;
             countDownTimer.cancel();

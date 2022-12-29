@@ -1,5 +1,6 @@
 package com.example.triviagame.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,10 +13,17 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.triviagame.Database.MyDataManager;
 import com.example.triviagame.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,12 +34,13 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private MaterialButton login_BTN, privacy_policy_BTN, terms_of_use_BTN, about_BTN;
 
+    private final MyDataManager dataManager = MyDataManager.getInstance();
+    private final FirebaseDatabase realtimeDB = dataManager.getRealTimeDB();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         initViews();
         initButtons();
@@ -69,10 +78,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        login_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (inputEmail.getText().toString().isEmpty() || inputPassword.getText().toString().isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Please fill in all details", Toast.LENGTH_SHORT).show();
+                } else if (!inputEmail.getText().toString().isEmpty() && !inputPassword.getText().toString().isEmpty()) {
+                    login(inputEmail.getText().toString(), inputPassword.getText().toString());
+                }
             }
         });
 
@@ -82,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         textViewSignUp = findViewById(R.id.textViewSignUp);
         inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
         login_BTN = findViewById(R.id.login_BTN);
         privacy_policy_BTN = findViewById(R.id.privacy_policy_BTN);
         terms_of_use_BTN = findViewById(R.id.terms_of_use_BTN);
@@ -89,8 +103,35 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    private void login(String email, String password) {
+        DatabaseReference myRef = dataManager.getRealTimeDB().getReference("Users");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.child("email").getValue().toString().equals(email)) {
+                        if (dataSnapshot.child("password").getValue().equals(password)) {
+                            startActivity(new Intent(LoginActivity.this, AllTopicsActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "The password is incorrect, please try again", Toast.LENGTH_SHORT).show();
+
+                        }
+                    } else {
+                        Toast.makeText(LoginActivity.this, "The email is not registered in the system", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
 
 
+    }
 
 
     public static void openHtmlTextDialog(Activity activity, String fileNameInAssets) {

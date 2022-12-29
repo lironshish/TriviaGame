@@ -3,9 +3,11 @@ package com.example.triviagame.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -47,16 +49,30 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String userName = inputUsername.getText().toString();
                 Log.d("pttt", "userName: " + userName);
+
                 String email = inputEmail.getText().toString();
                 Log.d("pttt", "email: " + email);
                 String password = inputPassword.getText().toString();
                 Log.d("pttt", "password: " + password);
-                tempUser = new MyUser(userName, email, password);
-                storeUserInDB(tempUser);
+                if(emailValidator(email)){
+                    tempUser = new MyUser(userName, email, password);
+                    storeUserInDB(tempUser);
+                }
 
             }
         });
     }
+
+
+    public boolean emailValidator(String email) {
+        if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return true;
+        } else {
+            Toast.makeText(this, "Enter valid Email address please", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
 
     private void storeUserInDB(MyUser tempUser) {
         UUID uuid = UUID.randomUUID();
