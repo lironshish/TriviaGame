@@ -88,6 +88,13 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
+            <CheckBox
+                android:id="@+id/inputPasswordl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="liron"/>
+
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_BTN"
             android:layout_width="wrap_content"

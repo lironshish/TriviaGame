@@ -95,8 +95,7 @@ public class AllTopicsActivity extends AppCompatActivity {
 
             @Override
             public void clicked(Topic item, int position, boolean premium) {
-                if ((!premium && position < 4) || premium) {
-
+                if ((!premium && position < 4) || (premium && position > 0)) {
                     Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("WebPage", item.getWebPage());
