@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.triviagame.Adapters.Trivia_Topic_Card_Adapter;
 import com.example.triviagame.Objects.Topic;
@@ -51,7 +52,7 @@ public class AllTopicsActivity extends AppCompatActivity {
         }
 
         findViews();
-        title.setText("Hi " + userName+ "," +"\n"+"Please choose questions topic");
+        title.setText("Hi " + userName + "," + "\n" + "Please choose questions topic");
 
         updateUI();
 
@@ -69,14 +70,16 @@ public class AllTopicsActivity extends AppCompatActivity {
                     String image = child.child("Image").getValue().toString();
                     String title = child.child("Title").getValue().toString();
                     String webPage = child.child("WebPage").getValue().toString();
-                    Topic topic = new Topic(title, image, webPage);
+                    Topic topic = new Topic(title, image, webPage, false);
                     temp.add(topic);
 
                 }
                 for (int i = 0; i < temp.size(); i++) {
                     myTopics.add(temp.get(i));
                 }
-                initAdapter();
+                initAdapter(false);
+
+
             }
 
             @Override
@@ -87,16 +90,22 @@ public class AllTopicsActivity extends AppCompatActivity {
     }
 
 
-    private void initAdapter() {
-        adapter = new Trivia_Topic_Card_Adapter(this, myTopics, new Trivia_Topic_Card_Adapter.TopicListener() {
+    private void initAdapter(boolean premium) {
+        adapter = new Trivia_Topic_Card_Adapter(this, premium, myTopics, new Trivia_Topic_Card_Adapter.TopicListener() {
 
             @Override
-            public void clicked(Topic item, int position) {
-                Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("WebPage", item.getWebPage());
-                intent.putExtra("Bundle", bundle);
-                startActivity(intent);
+            public void clicked(Topic item, int position, boolean premium) {
+                if ((!premium && position < 4) || premium) {
+
+                    Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("WebPage", item.getWebPage());
+                    intent.putExtra("Bundle", bundle);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(AllTopicsActivity.this, "You need Premium Subscription", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         topic_recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
