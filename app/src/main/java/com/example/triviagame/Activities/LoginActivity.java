@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -102,16 +103,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void login(String email, String password) {
+        final boolean[] isExist = {false};
         DatabaseReference myRef = dataManager.getRealTimeDB().getReference("Users");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     if (dataSnapshot.child("email").getValue().toString().equals(email)) {
+                        isExist[0] = true;
                         if (dataSnapshot.child("password").getValue().equals(password)) {
                             Intent intent = new Intent(LoginActivity.this, AllTopicsActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("userName", dataSnapshot.child("userName").getValue().toString());
+                            bundle.putString("isPremium", dataSnapshot.child("premium").getValue().toString());
                             intent.putExtra("Bundle", bundle);
                             startActivity(intent);
                             finish();
@@ -119,9 +123,11 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "The password is incorrect, please try again", Toast.LENGTH_SHORT).show();
 
                         }
-                    } else {
-                        Toast.makeText(LoginActivity.this, "The email is not registered in the system", Toast.LENGTH_SHORT).show();
                     }
+                }
+
+                if (!isExist[0]) {
+                    Toast.makeText(LoginActivity.this, "The email is not registered in the system", Toast.LENGTH_SHORT).show();
                 }
             }
 

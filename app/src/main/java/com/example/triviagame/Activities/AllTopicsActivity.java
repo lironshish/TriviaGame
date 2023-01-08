@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class AllTopicsActivity extends AppCompatActivity {
     //Bundle
     private Bundle bundle;
     private String userName;
+    private boolean premium;
 
 
     @Override
@@ -47,18 +49,21 @@ public class AllTopicsActivity extends AppCompatActivity {
         if (getIntent().getBundleExtra("Bundle") != null) {
             this.bundle = getIntent().getBundleExtra("Bundle");
             userName = bundle.getString("userName");
+            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
         } else {
             this.bundle = new Bundle();
         }
 
+        Log.d("pttt", "is premium "+ premium);
+
         findViews();
         title.setText("Hi " + userName + "," + "\n" + "Please choose questions topic");
 
-        updateUI();
+        updateUI(premium);
 
     }
 
-    private void updateUI() {
+    private void updateUI(boolean premium) {
         firebaseDatabase = FirebaseDatabase.getInstance();
         reference = firebaseDatabase.getReference("");
 
@@ -70,14 +75,14 @@ public class AllTopicsActivity extends AppCompatActivity {
                     String image = child.child("Image").getValue().toString();
                     String title = child.child("Title").getValue().toString();
                     String webPage = child.child("WebPage").getValue().toString();
-                    Topic topic = new Topic(title, image, webPage, false);
+                    Topic topic = new Topic(title, image, webPage, premium);
                     temp.add(topic);
 
                 }
                 for (int i = 0; i < temp.size(); i++) {
                     myTopics.add(temp.get(i));
                 }
-                initAdapter(false);
+                initAdapter(premium);
 
 
             }
@@ -95,12 +100,13 @@ public class AllTopicsActivity extends AppCompatActivity {
 
             @Override
             public void clicked(Topic item, int position, boolean premium) {
-                if ((!premium && position < 4) || (premium && position > 0)) {
+                if ((!premium && position < 4) || (premium)) {
                     Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("WebPage", item.getWebPage());
                     intent.putExtra("Bundle", bundle);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(AllTopicsActivity.this, "You need Premium Subscription", Toast.LENGTH_SHORT).show();
                 }
@@ -109,8 +115,6 @@ public class AllTopicsActivity extends AppCompatActivity {
         });
         topic_recycler_view.setLayoutManager(new GridLayoutManager(this, 2));
         topic_recycler_view.setAdapter(adapter);
-
-
     }
 
 

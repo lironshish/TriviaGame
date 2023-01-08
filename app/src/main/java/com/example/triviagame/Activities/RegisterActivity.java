@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView register;
     private EditText inputUsername, inputEmail, inputPassword;
     private MaterialButton register_BTN;
+    private CheckBox premium_account;
     //Local user
     private MyUser tempUser;
     //DB
@@ -49,8 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String userName = inputUsername.getText().toString();
                 String email = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
+                boolean premium = premium_account.isChecked();
                 if (emailValidator(email)) {
-                    tempUser = new MyUser(userName, email, password);
+                    tempUser = new MyUser(userName, email, password, premium);
                     storeUserInDB(tempUser);
                 }
             }
@@ -75,10 +78,16 @@ public class RegisterActivity extends AppCompatActivity {
         myRef.child("userName").setValue(tempUser.getName());
         myRef.child("email").setValue(tempUser.getEmail());
         myRef.child("password").setValue(tempUser.getPassword());
+        myRef.child("premium").setValue(tempUser.isPremium());
         Intent intent = new Intent(RegisterActivity.this, AllTopicsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("userName", tempUser.getName());
+        if(tempUser.isPremium())
+            bundle.putString("isPremium", "true");
+        else
+            bundle.putString("isPremium", "false");
         intent.putExtra("Bundle", bundle);
+        startActivity(intent);
         finish();
     }
 
@@ -88,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
         register_BTN = findViewById(R.id.register_BTN);
+        premium_account = findViewById(R.id.premium_account);
     }
 
 

@@ -22,6 +22,7 @@
         android:textColor="@color/white"
         android:textSize="90sp"
         android:textStyle="bold" />
+
     <LinearLayout
         android:id="@+id/LL_top"
         android:layout_width="wrap_content"
@@ -29,8 +30,7 @@
         android:layout_below="@+id/register"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/inputUsername"
@@ -88,22 +88,22 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
 
-            <CheckBox
-                android:id="@+id/inputPasswordl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="liron"/>
+        <CheckBox
+            android:id="@+id/premium_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/main_font"
+            android:text="Premium Account" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_BTN"
+            style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
             android:backgroundTint="@color/blue"
-            style="@style/Widget.Material3.FloatingActionButton.Large.Primary"
-            android:text="Register"
-            />
+            android:text="Register" />
     </LinearLayout>
 
 </RelativeLayout>

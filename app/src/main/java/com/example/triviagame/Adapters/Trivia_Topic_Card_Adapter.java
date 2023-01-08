@@ -1,6 +1,7 @@
 package com.example.triviagame.Adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
         void clicked(Topic item, int position, boolean premium);
     }
 
+
     private Activity activity;
     private ArrayList<Topic> topics = new ArrayList<>();
     private TopicListener topicListener;
@@ -34,8 +36,6 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
         this.topics = topics;
         this.topicListener = topicListener;
         this.premium = premium;
-        // TopicHolder.disablePremiumCards(position);
-
 
     }
 
@@ -59,9 +59,10 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
                 .load(topic.getImage())
                 .into(holder.topic_image);
 
+        Log.d("pttt", "holder "+ premium);
 
-        holder.disablePremiumCards(position);
 
+        holder.disablePremiumCards(position, premium);
 
     }
 
@@ -103,8 +104,11 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
 
         }
 
-        public void disablePremiumCards(int position) {
-            if (position < 4) {
+        public void disablePremiumCards(int position, boolean premium) {
+            if (!premium && position < 4) {
+                premium_LAY_locked.setVisibility(View.INVISIBLE);
+                disable_card.setVisibility(View.INVISIBLE);
+            } else if (premium){
                 premium_LAY_locked.setVisibility(View.INVISIBLE);
                 disable_card.setVisibility(View.INVISIBLE);
             }

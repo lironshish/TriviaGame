@@ -6,14 +6,16 @@ public class MyUser {
     private String email;
     private String password;
     private String UID;
+    private boolean premium;
 
-    public MyUser(String name, String email, String password) {
+    public MyUser(String name, String email, String password, boolean premium) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.premium = premium;
     }
 
-    public MyUser(){
+    public MyUser() {
 
     }
 
@@ -47,5 +49,13 @@ public class MyUser {
 
     public void setUID(String UID) {
         this.UID = UID;
+    }
+
+    public boolean isPremium() {
+        return premium;
+    }
+
+    public void setPremium(boolean premium) {
+        this.premium = premium;
     }
 }
