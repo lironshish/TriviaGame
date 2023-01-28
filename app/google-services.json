@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "584131576963",
+    "firebase_url": "https://triviagame-87e3b-default-rtdb.firebaseio.com",
     "project_id": "triviagame-87e3b",
     "storage_bucket": "triviagame-87e3b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:584131576963:android:b046e130ba3b2a4f72c7b6",
+        "mobilesdk_app_id": "1:584131576963:android:461e9fb8dba3e2df72c7b6",
         "android_client_info": {
           "package_name": "com.example.triviagame"
         }

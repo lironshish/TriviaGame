@@ -16,11 +16,31 @@
         android:background="@color/blue">
 
         <ImageView
+            android:id="@+id/IMG_back"
             android:layout_width="25dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_back"/>
+
+
+        <TextView
+            android:id="@+id/TXT_coins"
+            android:layout_height="22dp"
+            android:layout_width="30dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginTop="10dp"
+            android:text="0"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:src="@drawable/ic_coins"/>
+        <ImageView
+            android:id="@+id/IMG_coins"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_coins"/>
+
 
     </LinearLayout>
 

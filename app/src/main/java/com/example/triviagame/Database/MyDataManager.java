@@ -1,5 +1,7 @@
 package com.example.triviagame.Database;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -16,6 +18,7 @@ public class MyDataManager{
         firebaseAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         realTimeDB = FirebaseDatabase.getInstance();
+        Log.d("pttt","realTimeDB " +realTimeDB.getReference().toString());
     }
 
     public static MyDataManager getInstance() {

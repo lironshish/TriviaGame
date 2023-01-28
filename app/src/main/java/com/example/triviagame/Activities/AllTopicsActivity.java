@@ -54,7 +54,6 @@ public class AllTopicsActivity extends AppCompatActivity {
             this.bundle = new Bundle();
         }
 
-        Log.d("pttt", "is premium "+ premium);
 
         findViews();
         title.setText("Hi " + userName + "," + "\n" + "Please choose questions topic");

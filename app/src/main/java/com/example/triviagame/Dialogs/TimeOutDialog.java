@@ -2,6 +2,7 @@ package com.example.triviagame.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ public class TimeOutDialog {
     private TextView time_out_TXT;
     private ImageView time_out_IMG;
     private MaterialButton time_out_BTN;
-
+    private boolean clicked = false;
 
     public void show(Activity activity) {
         final Dialog dialog = new Dialog(activity);
@@ -26,6 +27,7 @@ public class TimeOutDialog {
         time_out_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                clicked = true;
                 dialog.dismiss();
             }
         });
@@ -34,6 +36,10 @@ public class TimeOutDialog {
         dialog.show();
     }
 
+    public boolean checkIfClicked(){
+        Log.d("pttt", "liron" + clicked);
+        return clicked;
+    }
 
     public void findViews(Dialog dialog) {
         time_out_TXT = dialog.findViewById(R.id.time_out_TXT);

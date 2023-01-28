@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.animation.Animator;
+import android.app.Dialog;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.os.CountDownTimer;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -36,10 +38,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     //UI
     private CardView card_question, card_A, card_B, card_C, card_D;
-    private TextView TXT_question, answer_A, answer_B, answer_C, answer_D;
+    private TextView TXT_question, answer_A, answer_B, answer_C, answer_D, TXT_coins;
     private MaterialButton next_question;
     private LottieAnimationView loading_LOTTIE_animation;
     private ProgressBar progress_bar;
+    private ImageView IMG_back, IMG_coins;
 
 
     //Bundle
@@ -59,6 +62,8 @@ public class QuestionActivity extends AppCompatActivity {
 
     //Sound
     private Sound sound;
+
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +171,7 @@ public class QuestionActivity extends AppCompatActivity {
                 countDownTimer.cancel();
                 countDownTimer.start();
             }
+            TXT_coins.setText("" + score);
             firstQuestion = false;
         }
     }
@@ -199,7 +205,6 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     private void initViews() {
-        // toolbar = findViewById(R.id.toolbar);
         card_question = findViewById(R.id.card_question);
         card_A = findViewById(R.id.card_A);
         card_B = findViewById(R.id.card_B);
@@ -213,6 +218,10 @@ public class QuestionActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         next_question = findViewById(R.id.next_question);
         loading_LOTTIE_animation = findViewById(R.id.loading_LOTTIE_animation);
+        TXT_coins = findViewById(R.id.TXT_coins);
+        IMG_back = findViewById(R.id.IMG_back);
+        IMG_coins = findViewById(R.id.IMG_coins);
+
     }
 
     private void initTimer() {
@@ -227,6 +236,23 @@ public class QuestionActivity extends AppCompatActivity {
             public void onFinish() {
                 TimeOutDialog timeOutDialog = new TimeOutDialog();
                 timeOutDialog.show(QuestionActivity.this);
+                if (timeOutDialog.checkIfClicked()) {
+                    Log.d("pttt", "here");
+                    index++;
+                    wrongCount++;
+                    if (score >= 10) {
+                        score -= 10;
+                    }
+                    if (index <= 9) {
+                        resetColor();
+                        Log.d("pttt", "here2");
+                        setData(results);
+                        enableCards();
+                    } else if (index == 10) {
+                        GameWon();
+                    }
+                }
+
             }
         }.start();
     }
@@ -239,11 +265,12 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 index++;
                 correctCount++;
+                score += 10;
                 if (index <= 9) {
                     resetColor();
                     setData(results);
                     enableCards();
-                } else if(index == 10) {
+                } else if (index == 10) {
                     GameWon();
                 }
 
@@ -261,11 +288,14 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 index++;
                 wrongCount++;
+                if (score >= 10) {
+                    score -= 10;
+                }
                 if (index <= 9) {
                     resetColor();
                     setData(results);
                     enableCards();
-                } else if (index == 10){
+                } else if (index == 10) {
                     GameWon();
                 }
             }

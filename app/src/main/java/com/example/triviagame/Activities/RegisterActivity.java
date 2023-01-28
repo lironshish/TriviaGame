@@ -2,6 +2,7 @@ package com.example.triviagame.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.CheckBox;
@@ -75,6 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
         UUID uuid = UUID.randomUUID();
         tempUser.setUID(uuid.toString());
         DatabaseReference myRef = realtimeDB.getReference("Users").child(uuid.toString());
+        Log.d("pttt","real "+myRef.toString() );
+
         myRef.child("userName").setValue(tempUser.getName());
         myRef.child("email").setValue(tempUser.getEmail());
         myRef.child("password").setValue(tempUser.getPassword());
