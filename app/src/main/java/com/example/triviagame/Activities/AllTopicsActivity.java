@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.triviagame.Adapters.Trivia_Topic_Card_Adapter;
+import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.Objects.Topic;
 import com.example.triviagame.R;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,6 @@ public class AllTopicsActivity extends AppCompatActivity {
     //Data base
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference reference;
-
 
     //Topic adapter
     private ArrayList<Topic> myTopics = new ArrayList();
@@ -49,10 +49,10 @@ public class AllTopicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_topics);
 
-        if (getIntent().getBundleExtra("Bundle") != null) {
-            this.bundle = getIntent().getBundleExtra("Bundle");
-            userName = bundle.getString("userName");
-            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
+        if (getIntent().getBundleExtra(Keys.BUNDLE) != null) {
+            this.bundle = getIntent().getBundleExtra(Keys.BUNDLE);
+            userName = bundle.getString(Keys.USER_NAME);
+            premium = Boolean.parseBoolean(bundle.getString(Keys.IS_PREMIUM));
         } else {
             this.bundle = new Bundle();
         }
@@ -116,10 +116,10 @@ public class AllTopicsActivity extends AppCompatActivity {
                 if ((!premium && position < 4) || (premium)) {
                     Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("WebPage", item.getWebPage());
-                    bundle.putString("userName", userName);
-                    bundle.putString("isPremium", premium+"");
-                    intent.putExtra("Bundle", bundle);
+                    bundle.putString(Keys.WEB_PAGE, item.getWebPage());
+                    bundle.putString(Keys.USER_NAME, userName);
+                    bundle.putString(Keys.IS_PREMIUM, premium + "");
+                    intent.putExtra(Keys.BUNDLE, bundle);
                     startActivity(intent);
                     finish();
                 } else {

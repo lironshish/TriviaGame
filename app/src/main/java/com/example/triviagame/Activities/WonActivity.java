@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.R;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
@@ -36,16 +37,16 @@ public class WonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_won);
 
 
-        if (getIntent().getBundleExtra("Bundle") != null) {
-            this.bundle = getIntent().getBundleExtra("Bundle");
-            userName = bundle.getString("userName");
-            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
+        if (getIntent().getBundleExtra(Keys.BUNDLE) != null) {
+            this.bundle = getIntent().getBundleExtra(Keys.BUNDLE);
+            userName = bundle.getString(Keys.USER_NAME);
+            premium = Boolean.parseBoolean(bundle.getString(Keys.IS_PREMIUM));
         } else {
             this.bundle = new Bundle();
         }
 
-        correct = getIntent().getIntExtra("correct", 0);
-        wrong = getIntent().getIntExtra("wrong", 0);
+        correct = getIntent().getIntExtra(Keys.CORRECT, 0);
+        wrong = getIntent().getIntExtra(Keys.WRONG, 0);
 
         initViews();
         initButtons();
@@ -61,9 +62,9 @@ public class WonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(WonActivity.this, AllTopicsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("userName", userName);
-                bundle.putString("isPremium", premium + "");
-                intent.putExtra("Bundle", bundle);
+                bundle.putString(Keys.USER_NAME, userName);
+                bundle.putString(Keys.IS_PREMIUM, premium + "");
+                intent.putExtra(Keys.BUNDLE, bundle);
                 startActivity(intent);
                 finish();
             }

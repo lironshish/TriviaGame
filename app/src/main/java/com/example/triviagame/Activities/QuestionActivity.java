@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.triviagame.Dialogs.TimeOutDialog;
+import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.Objects.Results;
 import com.example.triviagame.Objects.Sound;
 import com.example.triviagame.R;
@@ -70,11 +71,11 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        if (getIntent().getBundleExtra("Bundle") != null) {
-            this.bundle = getIntent().getBundleExtra("Bundle");
-            webPage = bundle.getString("WebPage");
-            userName = bundle.getString("userName");
-            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
+        if (getIntent().getBundleExtra(Keys.BUNDLE) != null) {
+            this.bundle = getIntent().getBundleExtra(Keys.BUNDLE);
+            webPage = bundle.getString(Keys.WEB_PAGE);
+            userName = bundle.getString(Keys.USER_NAME);
+            premium = Boolean.parseBoolean(bundle.getString(Keys.IS_PREMIUM));
         } else {
             this.bundle = new Bundle();
         }
@@ -105,9 +106,9 @@ public class QuestionActivity extends AppCompatActivity {
                 countDownTimer.cancel(); //stop the timer
                 Intent intent = new Intent(QuestionActivity.this, AllTopicsActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("userName", userName);
-                bundle.putString("isPremium", premium + "");
-                intent.putExtra("Bundle", bundle);
+                bundle.putString(Keys.USER_NAME, userName);
+                bundle.putString(Keys.IS_PREMIUM, premium + "");
+                intent.putExtra(Keys.BUNDLE, bundle);
                 startActivity(intent);
                 finish();
             }
@@ -150,19 +151,15 @@ public class QuestionActivity extends AppCompatActivity {
                 answer_D.setVisibility(View.VISIBLE);
                 next_question.setVisibility(View.VISIBLE);
                 progress_bar.setVisibility(View.VISIBLE);
-
                 initTimer();
-
             }
 
             @Override
             public void onAnimationCancel(Animator animator) {
-
             }
 
             @Override
             public void onAnimationRepeat(Animator animator) {
-
             }
         });
     }
@@ -202,7 +199,6 @@ public class QuestionActivity extends AppCompatActivity {
     public void makeServerCall(UpdateUI updateUI) {
         new Thread() {
             public void run() {
-
                 loading();
                 try (InputStream is = new URL(webPage).openStream();
                      Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
@@ -275,13 +271,11 @@ public class QuestionActivity extends AppCompatActivity {
                         }
                     }
                 });
-
             }
         }.start();
     }
 
     public void correctAnswer(CardView card) {
-
         card.setCardBackgroundColor(getResources().getColor(R.color.green));
         next_question.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,11 +290,8 @@ public class QuestionActivity extends AppCompatActivity {
                 } else if (index == 10) {
                     GameWon();
                 }
-
-
             }
         });
-
     }
 
     public void wrongAnswer(CardView card) {
@@ -330,12 +321,11 @@ public class QuestionActivity extends AppCompatActivity {
     private void GameWon() {
         Intent intent = new Intent(QuestionActivity.this, WonActivity.class);
         Bundle bundle = new Bundle();
-        intent.putExtra("correct", correctCount);
-        intent.putExtra("wrong", wrongCount);
-        bundle.putString("userName", userName);
-        bundle.putString("isPremium", premium + "");
-        intent.putExtra("Bundle", bundle);
-
+        intent.putExtra(Keys.CORRECT, correctCount);
+        intent.putExtra(Keys.WRONG, wrongCount);
+        bundle.putString(Keys.USER_NAME, userName);
+        bundle.putString(Keys.IS_PREMIUM, premium + "");
+        intent.putExtra(Keys.BUNDLE, bundle);
         startActivity(intent);
         finish();
     }

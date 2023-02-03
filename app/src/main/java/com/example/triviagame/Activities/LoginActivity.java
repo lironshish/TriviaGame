@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.triviagame.Database.MyDataManager;
+import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -103,20 +104,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(String email, String password) {
         final boolean[] isExist = {false};
-        DatabaseReference myRef = dataManager.getRealTimeDB().getReference("Users");
+        DatabaseReference myRef = dataManager.getRealTimeDB().getReference(Keys.USERS);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (dataSnapshot.child("email").getValue().toString().equals(email)) {
+                    if (dataSnapshot.child(Keys.EMAIL).getValue().toString().equals(email)) {
                         isExist[0] = true;
-                        if (dataSnapshot.child("password").getValue().equals(password)) {
+                        if (dataSnapshot.child(Keys.PASSWORD).getValue().equals(password)) {
                             Intent intent = new Intent(LoginActivity.this, AllTopicsActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putString("userName", dataSnapshot.child("userName").getValue().toString());
-                            bundle.putString("isPremium", dataSnapshot.child("premium").getValue().toString());
-                            intent.putExtra("Bundle", bundle);
+                            bundle.putString(Keys.USER_NAME, dataSnapshot.child(Keys.USER_NAME).getValue().toString());
+                            bundle.putString(Keys.IS_PREMIUM, dataSnapshot.child(Keys.PREMIUM).getValue().toString());
+                            intent.putExtra(Keys.BUNDLE, bundle);
                             startActivity(intent);
                             finish();
                         } else {

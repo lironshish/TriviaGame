@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.triviagame.Database.MyDataManager;
+import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.Objects.MyUser;
 import com.example.triviagame.R;
 import com.google.android.material.button.MaterialButton;
@@ -75,21 +76,19 @@ public class RegisterActivity extends AppCompatActivity {
     private void storeUserInDB(MyUser tempUser) {
         UUID uuid = UUID.randomUUID();
         tempUser.setUID(uuid.toString());
-        DatabaseReference myRef = realtimeDB.getReference("Users").child(uuid.toString());
-        Log.d("pttt","real "+myRef.toString() );
-
-        myRef.child("userName").setValue(tempUser.getName());
-        myRef.child("email").setValue(tempUser.getEmail());
-        myRef.child("password").setValue(tempUser.getPassword());
-        myRef.child("premium").setValue(tempUser.isPremium());
+        DatabaseReference myRef = realtimeDB.getReference(Keys.USERS).child(uuid.toString());
+        myRef.child(Keys.USER_NAME).setValue(tempUser.getName());
+        myRef.child(Keys.EMAIL).setValue(tempUser.getEmail());
+        myRef.child(Keys.PASSWORD).setValue(tempUser.getPassword());
+        myRef.child(Keys.PREMIUM).setValue(tempUser.isPremium());
         Intent intent = new Intent(RegisterActivity.this, AllTopicsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("userName", tempUser.getName());
-        if(tempUser.isPremium())
-            bundle.putString("isPremium", "true");
+        bundle.putString(Keys.USER_NAME, tempUser.getName());
+        if (tempUser.isPremium())
+            bundle.putString(Keys.IS_PREMIUM, "true");
         else
-            bundle.putString("isPremium", "false");
-        intent.putExtra("Bundle", bundle);
+            bundle.putString(Keys.IS_PREMIUM, "false");
+        intent.putExtra(Keys.BUNDLE, bundle);
         startActivity(intent);
         finish();
     }
