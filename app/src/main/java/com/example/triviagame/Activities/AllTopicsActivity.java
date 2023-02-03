@@ -119,6 +119,8 @@ public class AllTopicsActivity extends AppCompatActivity {
                     Intent intent = new Intent(AllTopicsActivity.this, QuestionActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("WebPage", item.getWebPage());
+                    bundle.putString("userName", userName);
+                    bundle.putString("isPremium", premium+"");
                     intent.putExtra("Bundle", bundle);
                     startActivity(intent);
                     finish();

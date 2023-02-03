@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,15 +23,30 @@ public class WonActivity extends AppCompatActivity {
     private ImageView IMG_back;
 
     //Counters
-    int correct, wrong;
+    private int correct, wrong;
+
+    private String userName;
+    private Bundle bundle;
+    private boolean premium;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_won);
+
+
+        if (getIntent().getBundleExtra("Bundle") != null) {
+            this.bundle = getIntent().getBundleExtra("Bundle");
+            userName = bundle.getString("userName");
+            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
+        } else {
+            this.bundle = new Bundle();
+        }
+
         correct = getIntent().getIntExtra("correct", 0);
         wrong = getIntent().getIntExtra("wrong", 0);
+
         initViews();
         initButtons();
 
@@ -44,6 +60,10 @@ public class WonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WonActivity.this, AllTopicsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userName", userName);
+                bundle.putString("isPremium", premium + "");
+                intent.putExtra("Bundle", bundle);
                 startActivity(intent);
                 finish();
             }

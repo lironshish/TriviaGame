@@ -59,9 +59,6 @@ public class Trivia_Topic_Card_Adapter extends RecyclerView.Adapter<RecyclerView
                 .load(topic.getImage())
                 .into(holder.topic_image);
 
-        Log.d("pttt", "holder "+ premium);
-
-
         holder.disablePremiumCards(position, premium);
 
     }

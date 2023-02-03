@@ -48,6 +48,8 @@ public class QuestionActivity extends AppCompatActivity {
     //Bundle
     private Bundle bundle;
     private String webPage;
+    private String userName;
+    private boolean premium;
 
     //Timer
     private CountDownTimer countDownTimer;
@@ -55,9 +57,9 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean firstQuestion = true;
 
     //Questions
-    int index = 0;
-    int correctCount = 0;
-    int wrongCount = 0;
+    private int index = 0;
+    private int correctCount = 0;
+    private int wrongCount = 0;
     private Results results = new Results();
 
     //Sound
@@ -73,6 +75,8 @@ public class QuestionActivity extends AppCompatActivity {
         if (getIntent().getBundleExtra("Bundle") != null) {
             this.bundle = getIntent().getBundleExtra("Bundle");
             webPage = bundle.getString("WebPage");
+            userName = bundle.getString("userName");
+            premium = Boolean.parseBoolean(bundle.getString("isPremium"));
         } else {
             this.bundle = new Bundle();
         }
@@ -100,7 +104,12 @@ public class QuestionActivity extends AppCompatActivity {
         IMG_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                countDownTimer.cancel(); //stop the timer
                 Intent intent = new Intent(QuestionActivity.this, AllTopicsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("userName", userName);
+                bundle.putString("isPremium", premium + "");
+                intent.putExtra("Bundle", bundle);
                 startActivity(intent);
                 finish();
             }
@@ -188,7 +197,6 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-
     interface UpdateUI {
         public void update(Results r);
     }
@@ -214,7 +222,6 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }.start();
     }
-
 
     private void initViews() {
         card_question = findViewById(R.id.card_question);
@@ -324,8 +331,13 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void GameWon() {
         Intent intent = new Intent(QuestionActivity.this, WonActivity.class);
+        Bundle bundle = new Bundle();
         intent.putExtra("correct", correctCount);
         intent.putExtra("wrong", wrongCount);
+        bundle.putString("userName", userName);
+        bundle.putString("isPremium", premium + "");
+        intent.putExtra("Bundle", bundle);
+
         startActivity(intent);
         finish();
     }
@@ -351,7 +363,6 @@ public class QuestionActivity extends AppCompatActivity {
         card_D.setCardBackgroundColor(getResources().getColor(R.color.white));
     }
 
-
     private void checkIfCorrectAnswer(CardView cardView, TextView textView) {
         countDownTimer.cancel(); //stop the timer
         if (index <= (results.getResults().size() - 1)) {
@@ -364,7 +375,6 @@ public class QuestionActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private void initCards() {
         card_A.setOnClickListener(new View.OnClickListener() {
