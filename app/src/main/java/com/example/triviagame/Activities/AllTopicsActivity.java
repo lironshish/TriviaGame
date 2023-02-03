@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,7 +56,6 @@ public class AllTopicsActivity extends AppCompatActivity {
         } else {
             this.bundle = new Bundle();
         }
-
 
         findViews();
         initButtons();
