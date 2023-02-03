@@ -16,7 +16,6 @@ public class TimeOutDialog {
     private TextView time_out_TXT;
     private ImageView time_out_IMG;
     private MaterialButton time_out_BTN;
-    private boolean clicked = false;
 
     public void show(Activity activity) {
         final Dialog dialog = new Dialog(activity);
@@ -27,18 +26,12 @@ public class TimeOutDialog {
         time_out_BTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clicked = true;
                 dialog.dismiss();
             }
         });
 
 
         dialog.show();
-    }
-
-    public boolean checkIfClicked(){
-        Log.d("pttt", "liron" + clicked);
-        return clicked;
     }
 
     public void findViews(Dialog dialog) {

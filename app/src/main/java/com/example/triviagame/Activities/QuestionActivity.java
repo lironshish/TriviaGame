@@ -79,6 +79,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         sound = new Sound();
         initViews();
+        initButtons();
 
         makeServerCall(new UpdateUI() {
             @Override
@@ -93,6 +94,17 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
         initCards();
+    }
+
+    private void initButtons() {
+        IMG_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuestionActivity.this, AllTopicsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 
@@ -236,22 +248,28 @@ public class QuestionActivity extends AppCompatActivity {
             public void onFinish() {
                 TimeOutDialog timeOutDialog = new TimeOutDialog();
                 timeOutDialog.show(QuestionActivity.this);
-                if (timeOutDialog.checkIfClicked()) {
-                    Log.d("pttt", "here");
-                    index++;
-                    wrongCount++;
-                    if (score >= 10) {
-                        score -= 10;
-                    }
-                    if (index <= 9) {
-                        resetColor();
-                        Log.d("pttt", "here2");
-                        setData(results);
-                        enableCards();
-                    } else if (index == 10) {
-                        GameWon();
-                    }
+                next_question.setEnabled(true);
+                index++;
+                wrongCount++;
+                if (score >= 10) {
+                    score -= 10;
                 }
+                card_A.setCardBackgroundColor(getResources().getColor(R.color.grey));
+                card_B.setCardBackgroundColor(getResources().getColor(R.color.grey));
+                card_C.setCardBackgroundColor(getResources().getColor(R.color.grey));
+                card_D.setCardBackgroundColor(getResources().getColor(R.color.grey));
+                next_question.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (index <= 9) {
+                            resetColor();
+                            setData(results);
+                            enableCards();
+                        } else if (index == 10) {
+                            GameWon();
+                        }
+                    }
+                });
 
             }
         }.start();

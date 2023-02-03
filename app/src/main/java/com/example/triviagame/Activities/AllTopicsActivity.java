@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,8 @@ public class AllTopicsActivity extends AppCompatActivity {
     private RecyclerView topic_recycler_view;
     private TextView title;
 
+    private ImageView IMG_logout;
+
     //Bundle
     private Bundle bundle;
     private String userName;
@@ -56,10 +60,22 @@ public class AllTopicsActivity extends AppCompatActivity {
 
 
         findViews();
+        initButtons();
         title.setText("Hi " + userName + "," + "\n" + "Please choose questions topic");
 
         updateUI(premium);
 
+    }
+
+    private void initButtons() {
+        IMG_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AllTopicsActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void updateUI(boolean premium) {
@@ -120,6 +136,7 @@ public class AllTopicsActivity extends AppCompatActivity {
     private void findViews() {
         topic_recycler_view = findViewById(R.id.topic_recycler_view);
         title = findViewById(R.id.title);
+        IMG_logout = findViewById(R.id.IMG_logout);
     }
 
 }
