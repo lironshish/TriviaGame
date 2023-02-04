@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
+    android:orientation="vertical"
     tools:context=".Activities.AllTopicsActivity">
 
     <LinearLayout
@@ -20,41 +20,49 @@
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/ic_logout"/>
+            android:src="@drawable/ic_logout" />
 
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/title"
-        android:layout_below="@+id/top_part"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="30dp"
+        android:layout_below="@+id/top_part"
+        android:layout_gravity="center"
+        android:fontFamily="@font/titles_font"
         android:gravity="center"
         android:text=""
-        android:fontFamily="@font/titles_font"
-        />
-
+        android:textSize="30dp" />
 
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:gravity="center"
+        android:layout_height="500dp"
         android:layout_below="@+id/title"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:orientation="vertical"
         android:padding="5dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/topic_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:paddingTop="60dp"
-            android:gravity="center"
-            android:layout_margin="5dp" />
+        <ScrollView
+            android:id="@+id/newMeasure_scroll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/topic_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp" />
+        </ScrollView>
     </LinearLayout>
 
-</RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/main_LAY_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</androidx.appcompat.widget.LinearLayoutCompat>
