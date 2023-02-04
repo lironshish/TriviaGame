@@ -1,5 +1,6 @@
 package com.example.triviagame.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -9,10 +10,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.triviagame.Dialogs.TimeOutDialog;
@@ -20,6 +23,8 @@ import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.Objects.Results;
 import com.example.triviagame.Objects.Sound;
 import com.example.triviagame.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 
@@ -32,6 +37,14 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.google.firebase.BuildConfig;
+
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -66,11 +79,11 @@ public class QuestionActivity extends AppCompatActivity {
 
     private int score = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-
         if (getIntent().getBundleExtra(Keys.BUNDLE) != null) {
             this.bundle = getIntent().getBundleExtra(Keys.BUNDLE);
             webPage = bundle.getString(Keys.WEB_PAGE);
@@ -99,7 +112,9 @@ public class QuestionActivity extends AppCompatActivity {
         initCards();
     }
 
+
     private void initButtons() {
+
         IMG_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -67,14 +66,14 @@ public class AllTopicsActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
 
     //Ads
-   // private RewardedAd mRewardedAd;
+    private RewardedAd mRewardedAd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_topics);
-      //  loadVideoAd();
+        loadVideoAd();
         if (getIntent().getBundleExtra(Keys.BUNDLE) != null) {
             this.bundle = getIntent().getBundleExtra(Keys.BUNDLE);
             userName = bundle.getString(Keys.USER_NAME);
@@ -89,7 +88,6 @@ public class AllTopicsActivity extends AppCompatActivity {
         title.setGravity(Gravity.CENTER);
         updateUI(premium);
         initAnalytics();
-
     }
 
     private void initButtons() {
@@ -99,6 +97,9 @@ public class AllTopicsActivity extends AppCompatActivity {
                 Intent intent = new Intent(AllTopicsActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+                if (!premium) {
+                    showVideoAd();
+                }
             }
         });
 
@@ -123,8 +124,6 @@ public class AllTopicsActivity extends AppCompatActivity {
                     myTopics.add(temp.get(i));
                 }
                 initAdapter(premium);
-
-
             }
 
             @Override
@@ -133,8 +132,7 @@ public class AllTopicsActivity extends AppCompatActivity {
             }
         });
 
-        if(!premium){
-            Log.d("pttt", "Liron ");
+        if (!premium) {
             showBanner();
         }
     }
@@ -153,9 +151,10 @@ public class AllTopicsActivity extends AppCompatActivity {
                     bundle.putString(Keys.IS_PREMIUM, premium + "");
                     intent.putExtra(Keys.BUNDLE, bundle);
                     startActivity(intent);
-                    finish();
+                    //finish();
                 } else {
                     Toast.makeText(AllTopicsActivity.this, "You need Premium Subscription", Toast.LENGTH_SHORT).show();
+                    showVideoAd();
                 }
 
             }
@@ -171,18 +170,7 @@ public class AllTopicsActivity extends AppCompatActivity {
         title = findViewById(R.id.title);
         IMG_logout = findViewById(R.id.IMG_logout);
 
-//        action_a = findViewById(R.id.action_a);
-//        action_b = findViewById(R.id.action_b);
-
     }
-
-//    private void actionA() {
-//        showBanner();
-//    }
-//
-//    private void actionB() {
-//        showVideoAd();
-//    }
 
 
     private void initAnalytics() {
@@ -217,41 +205,39 @@ public class AllTopicsActivity extends AppCompatActivity {
         return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth);
     }
 
-//    private void loadVideoAd() {
-//        // action_a.setEnabled(false);
-//        String UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
-//        if (BuildConfig.DEBUG) {
-//            UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
-//        }
-//
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        RewardedAd.load(this, UNIT_ID,
-//                adRequest, new RewardedAdLoadCallback() {
-//                    @Override
-//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-//                        // Handle the error.
-//                        Log.d("pttt", loadAdError.toString());
-//                        mRewardedAd = null;
-//                    }
-//
-//                    @Override
-//                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
-//                        mRewardedAd = rewardedAd;
-//                        //action_b.setEnabled(true);
-//                        Log.d("pttt", "Ad was loaded.");
-//                    }
-//                });
-//    }
-//
-//
-//    private void showVideoAd() {
-//        mRewardedAd.show(this, new OnUserEarnedRewardListener() {
-//            @Override
-//            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-//                Toast.makeText(AllTopicsActivity.this, "Congr... +1 Live", Toast.LENGTH_SHORT).show();
-//                loadVideoAd();
-//            }
-//        });
-//    }
+    private void loadVideoAd() {
+        String UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+        if (BuildConfig.DEBUG) {
+            UNIT_ID = "ca-app-pub-3940256099942544/5224354917";
+        }
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        RewardedAd.load(this, UNIT_ID,
+                adRequest, new RewardedAdLoadCallback() {
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error.
+                        Log.d("pttt", loadAdError.toString());
+                        mRewardedAd = null;
+                    }
+
+                    @Override
+                    public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
+                        mRewardedAd = rewardedAd;
+                        //action_b.setEnabled(true);
+                        Log.d("pttt", "Ad was loaded.");
+                    }
+                });
+    }
+
+
+    private void showVideoAd() {
+        mRewardedAd.show(this, new OnUserEarnedRewardListener() {
+            @Override
+            public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+                loadVideoAd();
+            }
+        });
+    }
 
 }
