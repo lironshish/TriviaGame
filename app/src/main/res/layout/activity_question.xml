@@ -23,12 +23,19 @@
             android:layout_marginTop="5dp"
             android:src="@drawable/ic_back"/>
 
+        <ImageView
+            android:id="@+id/IMG_clue"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="230dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_clue"/>
 
         <TextView
             android:id="@+id/TXT_coins"
             android:layout_height="22dp"
             android:layout_width="30dp"
-            android:layout_marginStart="270dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="0"
             android:textSize="20dp"

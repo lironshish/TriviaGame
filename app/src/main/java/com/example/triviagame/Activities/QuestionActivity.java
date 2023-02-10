@@ -1,16 +1,16 @@
 package com.example.triviagame.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.animation.Animator;
+import android.app.AlertDialog;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,8 +23,7 @@ import com.example.triviagame.Finals.Keys;
 import com.example.triviagame.Objects.Results;
 import com.example.triviagame.Objects.Sound;
 import com.example.triviagame.R;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.rewarded.RewardedAd;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.gson.Gson;
 
@@ -38,13 +37,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.google.firebase.BuildConfig;
-
 
 public class QuestionActivity extends AppCompatActivity {
 
@@ -54,7 +46,7 @@ public class QuestionActivity extends AppCompatActivity {
     private MaterialButton next_question;
     private LottieAnimationView loading_LOTTIE_animation;
     private ProgressBar progress_bar;
-    private ImageView IMG_back, IMG_coins;
+    private ImageView IMG_back, IMG_coins, IMG_clue;
 
 
     //Bundle
@@ -78,6 +70,8 @@ public class QuestionActivity extends AppCompatActivity {
     private Sound sound;
 
     private int score = 0;
+
+    private DialogInterface.OnClickListener dialogClickListener;
 
 
     @Override
@@ -128,6 +122,82 @@ public class QuestionActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        IMG_clue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // variable and initializing it.
+                dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                if (score >= 10) {
+                                    countDownTimer.cancel();
+                                    score -= 10;
+                                    correctCount++;
+                                    next_question.setEnabled(true);
+                                    index++;
+                                    next_question.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            if (index <= 9) {
+                                                resetColor();
+                                                setData(results);
+                                                enableCards();
+                                            } else if (index == 10) {
+                                                GameWon();
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(QuestionActivity.this, "You don't have enough coins...", Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                dialog.dismiss();
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuestionActivity.this);
+                builder.setMessage("Do you want to skip the question in exchange for 10 coins?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener)
+                        .show();
+
+            }
+        });
+
+//                BuyClueDialog buyClueDialog = new BuyClueDialog();
+//                buyClueDialog.show(QuestionActivity.this,score);
+//                int answer = buyClueDialog.initButtons(score);
+//                Log.d("pttt", "answer: " + answer);
+//                if(answer == 0){
+//
+//                }else if (answer == 1){
+//                    countDownTimer.cancel();
+//                    score -= 10;
+//                    next_question.setEnabled(true);
+//                    index++;
+//                    next_question.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (index <= 9) {
+//                                resetColor();
+//                                setData(results);
+//                                enableCards();
+//                            } else if (index == 10) {
+//                                GameWon();
+//                            }
+//                        }
+//                    });
+//
+//                } else if(answer == -1){
+//                    Toast.makeText(QuestionActivity.this, "You don't have enough coins...", Toast.LENGTH_SHORT).show();
+//                }
+
+
     }
 
 
@@ -249,6 +319,7 @@ public class QuestionActivity extends AppCompatActivity {
         TXT_coins = findViewById(R.id.TXT_coins);
         IMG_back = findViewById(R.id.IMG_back);
         IMG_coins = findViewById(R.id.IMG_coins);
+        IMG_clue = findViewById(R.id.IMG_clue);
 
     }
 
