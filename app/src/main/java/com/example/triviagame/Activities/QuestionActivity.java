@@ -126,8 +126,6 @@ public class QuestionActivity extends AppCompatActivity {
         IMG_clue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // variable and initializing it.
                 dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -168,35 +166,6 @@ public class QuestionActivity extends AppCompatActivity {
 
             }
         });
-
-//                BuyClueDialog buyClueDialog = new BuyClueDialog();
-//                buyClueDialog.show(QuestionActivity.this,score);
-//                int answer = buyClueDialog.initButtons(score);
-//                Log.d("pttt", "answer: " + answer);
-//                if(answer == 0){
-//
-//                }else if (answer == 1){
-//                    countDownTimer.cancel();
-//                    score -= 10;
-//                    next_question.setEnabled(true);
-//                    index++;
-//                    next_question.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (index <= 9) {
-//                                resetColor();
-//                                setData(results);
-//                                enableCards();
-//                            } else if (index == 10) {
-//                                GameWon();
-//                            }
-//                        }
-//                    });
-//
-//                } else if(answer == -1){
-//                    Toast.makeText(QuestionActivity.this, "You don't have enough coins...", Toast.LENGTH_SHORT).show();
-//                }
-
 
     }
 
